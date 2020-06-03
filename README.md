@@ -3,7 +3,7 @@ This workflow will align raw RNAseq reads to the *P.monodon* transcriptome using
 ![Image of workflow](https://github.com/fransamsing/Salmon_align/blob/master/Docs/Analysis_pipeline.png)
 First, download and clone this github directory into your home directory in Pearcey using:
 
-``` git clone https://github.com/fransamsing/Salmon_align``` 
+``` git clone https://github.com/fransamsing/RAL_RNAseq``` 
 
 After cloning, all scripts are designed to run from the ```Scripts/``` directory.
 
