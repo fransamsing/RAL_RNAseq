@@ -1,7 +1,6 @@
 # Workflow for RAL hemocytes RNAseq dataset
-
 This workflow will align raw RNAseq reads to the *P.monodon* transcriptome using **Salmon** and the following pipeline: 
-![Image of workflow](https://github.com/fransamsing/Salmon_align/blob/master/Docs/Analysis_pipeline.png).
+![Image of workflow](https://github.com/fransamsing/Salmon_align/blob/master/Docs/Analysis_pipeline.png)
 First, download and clone this github directory into your home directory in Pearcey using:
 
 ``` git clone https://github.com/fransamsing/Salmon_align``` 
@@ -45,7 +44,7 @@ This was creaded in R using the following command:
 # Get METADATA with Read 1 and Read 2 in separate columns to create a STAR input list
 library(tidyverse)
 
-metadata <- read_csv("/home/sam079/RAL_hemoRNAseq/METADATA.csv")
+metadata <- read_csv("METADATA.csv")
 metadata$read <- rep(c("1","2"), 18)
 read1 <- metadata %>% filter(read == 1)
 read2 <- metadata %>% filter(read == 2)
@@ -60,8 +59,66 @@ colnames(reads_combined) <- c('read1', 'read2')
 STAR_input_files <- reads_combined %>% separate(read1, c('sample_ID', 'file_format'), sep = '_', remove = FALSE)
 STAR_input_files <- cbind(STAR_input_files$sample_ID, STAR_input_files$read1, STAR_input_files$read2)
 
-#write.table(STAR_input_files, "/home/sam079/RAL_hemoRNAseq/STARInputList.csv", row.names = F, col.names = F, sep=",", quote=FALSE)
+#write.table(STAR_input_files, "STARInputList.csv", row.names = F, col.names = F, sep=",", quote=FALSE)
 ```
+## Alignment of Raw Reads to the hub transcriptoe using Salmon 
+
+- **Salmon Home Page:** https://combine-lab.github.io/salmon/
+- **Salmon workflow:** https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/04_quasi_alignment_salmon.html
+
+Salmon uses the reference transcriptome (in FASTA format) and raw sequencing reads (in FASTQ format) as input to perform both mapping and quantification of the reads.
+
+**Salmon** was published in Nature Methods in 2017:
+- https://www.nature.com/articles/nmeth.4197
+
+### 1. Creating the Transcriptome Index
+
+This step involves creating an index to evaluate the sequences for all possible unique sequences of length k (k-mer) in the transcriptome, which includes all known transcripts/splice isoforms for all genes.
+
+First, make a directory in scratch to save the index. 
+```mkdir /scratch1/sam079/RAL_hemoRNAseq/Salmon/Index```
+
+Then, run the ```salmon_index.sh``` script. 
+
+### 2. Mapping and quantification with Salmon
+
+The quasi-mapping approach used by Salmon estimates where the reads best map to on the transcriptome through identifying where informative sequences within the read map to instead of performing base-by-base alignment
+
+After determining the best mapping for each read/fragment using the quasi-mapping method, salmon will generate the final transcript abundance estimates after modeling sample-specific parameters and biases. 
+
+To map and quantify raw reads, run the ```salmon_align.sh``` script. 
+
+In this script: 
+
+- ```-i```: specify the location of the index directory; for us ```/scratch1/sam079/RAL_hemoRNAseq/Salmon/Index```
+- ```--useVBOpt```: use variational Bayesian EM algorithm rather than the ‘standard EM’ to optimize abundance estimates (more accurate)
+- ```--seqBias```: will enable it to learn and correct for sequence-specific biases in the input data
+-```p 8```: number of threads
+- ```-l A```: Format string describing the library type. ```A``` will automatically infer the library type (e.g. unstranded)
+- ```-1```: sample file, forward reads
+- ```-2```: sample file, reverse reads
+- ```-o```: output quantification file names
+
+### 3. Salmon output
+
+In the previous mapping step, new directories are created for each sample. A list of them can be found here: 
+
+```ls /scratch1/sam079/RAL_hemoRNAseq/Salmon/Align/```
+
+Inside each directory, there is a ```quant.sf``` file. This is the quantification file in which each row corresponds to a transcript, and the columns correspond to metrics for each transcript. You can inspect the first one using:
+
+```cat /scratch1/sam079/RAL_hemoRNAseq/Salmon/Align/P1A2/quant.sf | head```
+
+The read mapping summary for each sample is found in the ```aux_info/``` directory for each sample, in the ```meta_info.json``` file. You can print this information for each file by running:
+
+```cat /scratch1/sam079/RAL_hemoRNAseq/Salmon/Align/P1A2/aux_info/meta_info.json```
+
+To view other files, just change the directory path to each sample ID. 
+
+The mapping info shows: 
+
+- 'library_types': ['IU'] --> which stands for **Inward** and **Unstranded**. More info here: [link to library types](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype)
+- 'percent_mapped': 91.75186622610238 --> which was very good for all files! 
 
 
 
