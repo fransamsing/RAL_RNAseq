@@ -29,7 +29,7 @@ The quality of the raw RNAseq data looks really good, so we proceed with the pip
 
 The transcriptomes was downloaded into ```/scratch1/sam079/P_monodon/``` using ```wget```.
 
-**Hub transcriptome from Huerlimann et al. 2018 (https://www.nature.com/articles/s41598-018-31148-4), available here:**
+Hub transcriptome from [Huerlimann et al. 2018](https://www.nature.com/articles/s41598-018-31148-4), can be downloaded from:
 
 * https://sra-download.ncbi.nlm.nih.gov/traces/wgs03/wgs_aux/GG/LH/GGLH01/GGLH01.1.fsa_nt.gz
 * Github with code: https://github.com/R-Huerlimann/Pmono_multitissue_transcriptome
@@ -63,13 +63,12 @@ STAR_input_files <- cbind(STAR_input_files$sample_ID, STAR_input_files$read1, ST
 ```
 ## Alignment of Raw Reads to the hub transcriptoe using Salmon 
 
-- **Salmon Home Page:** https://combine-lab.github.io/salmon/
-- **Salmon workflow:** https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/04_quasi_alignment_salmon.html
+- [**Salmon Home Page:**](https://combine-lab.github.io/salmon/)
+- [**Salmon workflow:**](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/04_quasi_alignment_salmon.html)
 
 Salmon uses the reference transcriptome (in FASTA format) and raw sequencing reads (in FASTQ format) as input to perform both mapping and quantification of the reads.
 
-**Salmon** was published in Nature Methods in 2017:
-- https://www.nature.com/articles/nmeth.4197
+The link to the **Salmon** paper published in Nature Methods in 2017 can be found [here](https://www.nature.com/articles/nmeth.4197)
 
 ### 1. Creating the Transcriptome Index
 
@@ -115,13 +114,36 @@ The read mapping summary for each sample is found in the ```aux_info/``` directo
 
 To view other files, just change the directory path to each sample ID. 
 
-The mapping info shows: 
+Among many other parameters, this meta_info file shows: 
 
-- 'library_types': ['IU'] --> which stands for **Inward** and **Unstranded**. More info here: [link to library types](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype)
-- 'percent_mapped': 91.75186622610238 --> which was very good for all files! 
+- 'library_types': ['IU'] -> which stands for **Inward** and **Unstranded**. More info [here](https://salmon.readthedocs.io/en/latest/salmon.html#what-s-this-libtype)
+- 'percent_mapped': 91.75186622610238 -> which was very good for all files! 
 
+You can also loop through all files running this from the ```Scripts/``` directory:
 
+```
+FILENAMES=$(cut -d , -f 1 ../STARInputList.csv)
+INPDIR=/scratch1/sam079/RAL_hemoRNAseq/Salmon/Align
+for f in $FILENAMES
+         do 
+         echo ${f}
+         grep -r '"percent_mapped":'  ${INPDIR}/${f}/aux_info/meta_info.json
+done 
+```
 
+## RNAseq-workflow and Differential Expression
+
+**Resources:**
+- [RNA-seq workflow](https://bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html)
+- [RNAseq using DEseq](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
+
+### 1. Export quantification files to local machine 
+
+Using [FileZilla](https://filezilla-project.org/) export the files in ```/scratch1/sam079/RAL_hemoRNAseq/Salmon/Align``` to a local machine to run differential expression analysis. 
+
+### 2. Import quantification files into R 
+
+Once the files (one for each sample) are in a local directory ```(e.g. Data/Quant_files)```, this can be imported into R using ```tximport```, which can be downloaded from [Bioconductor](https://bioconductor.riken.jp/packages/3.7/bioc/vignettes/tximport/inst/doc/tximport.html)
 
 
 
