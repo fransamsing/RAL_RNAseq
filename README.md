@@ -162,7 +162,18 @@ The output from this code is a file called ```count_matrix.csv```, which can be 
 
 The start of the differential expression pipeline can be found in ```DESeq_from_count_matrix.R```. 
 
+Example of some of the outputs
 
+**PCA PLOT**
+
+![PCA_plot](https://github.com/fransamsing/Salmon_align/blob/master/Results/PCA_plot.png)
+
+**Volcano Plots**
+
+![30mins](https://github.com/fransamsing/Salmon_align/blob/master/Results/volcano_plot_30mins.png)
+
+
+![60mins](https://github.com/fransamsing/Salmon_align/blob/master/Results/volcano_plot_60mins.png)
 
 
 
