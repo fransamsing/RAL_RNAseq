@@ -63,8 +63,8 @@ STAR_input_files <- cbind(STAR_input_files$sample_ID, STAR_input_files$read1, ST
 ```
 ## Alignment of Raw Reads to the hub transcriptoe using Salmon 
 
-- [**Salmon Home Page:**](https://combine-lab.github.io/salmon/)
-- [**Salmon workflow:**](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/04_quasi_alignment_salmon.html)
+- [**Salmon Home Page**](https://combine-lab.github.io/salmon/)
+- [**Salmon workflow**](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/04_quasi_alignment_salmon.html)
 
 Salmon uses the reference transcriptome (in FASTA format) and raw sequencing reads (in FASTQ format) as input to perform both mapping and quantification of the reads.
 
@@ -139,11 +139,26 @@ done
 
 ### 1. Export quantification files to local machine 
 
-Using [FileZilla](https://filezilla-project.org/) export the files in ```/scratch1/sam079/RAL_hemoRNAseq/Salmon/Align``` to a local machine to run differential expression analysis. 
+Using [fileZilla](https://filezilla-project.org/) export the files in ```/scratch1/sam079/RAL_hemoRNAseq/Salmon/Align``` to a local machine to run differential expression analysis. You can connect to fileZilla using:
+
+- Host: pearcey.hpc.csiro.au
+- Username: your Pearcey username or Ident
+- Password: your Ident password
+- Port: 22
+
+On your left side, you should have your local machine directory, navigate to the directory where you want to save the files. On your right side, you should have the scratch1 directory ```/scratch1/sam079/RAL_hemoRNAseq/Salmon/Align```
+
+Then simply drag and drop these files into your local directory. 
 
 ### 2. Import quantification files into R 
 
-Once the files (one for each sample) are in a local directory ```(e.g. Data/Quant_files)```, this can be imported into R using ```tximport```, which can be downloaded from [Bioconductor](https://bioconductor.riken.jp/packages/3.7/bioc/vignettes/tximport/inst/doc/tximport.html)
+Once the files (one for each sample) are in a local directory ```(Data/Quant_files)```, this can be imported into R using ```tximport```, which can be installed from [Bioconductor](https://bioconductor.riken.jp/packages/3.7/bioc/vignettes/tximport/inst/doc/tximport.html)
+
+The R code to run this is called ```Import_quant_tximport.R```
+
+The output from this code is ```count_matrix.csv```, which can be further processed in DESeq, or similar (e.g. EdgeR) 
+
+### 3. Differential Expression Using DESeq
 
 
 
