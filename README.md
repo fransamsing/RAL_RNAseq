@@ -152,14 +152,15 @@ Then simply drag and drop these files into your local directory.
 
 ### 2. Import quantification files into R 
 
-Once the files (one for each sample) are in a local directory ```(Data/Quant_files)```, this can be imported into R using ```tximport```, which can be installed from [Bioconductor](https://bioconductor.riken.jp/packages/3.7/bioc/vignettes/tximport/inst/doc/tximport.html)
+Once the files (one for each sample) are in a local directory ```(Data/Quant_files)```, this can be imported into R using ```tximport```, which can be installed from [Bioconductor](https://bioconductor.riken.jp/packages/3.7/bioc/vignettes/tximport/inst/doc/tximport.html).
 
 The R code to run this is called ```Import_quant_tximport.R```
 
-The output from this code is ```count_matrix.csv```, which can be further processed in DESeq, or similar (e.g. EdgeR) 
+The output from this code is a file called ```count_matrix.csv```, which can be further processed using DESeq or similar (e.g. EdgeR). 
 
-### 3. Differential Expression Using DESeq
+### 3. Differential Expression Using DESeq2
 
+The start of the differential expression pipeline can be found in ```DESeq_from_count_matrix.R```. 
 
 
 
