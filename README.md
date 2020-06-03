@@ -1,4 +1,4 @@
-# RNAseq workflow for RAL hemocytes data
+# RNAseq workflow for RAL hemocytes dataset
 This workflow will align raw RNAseq reads to the *P.monodon* transcriptome using **Salmon** and the following pipeline: 
 ![Image of workflow](https://github.com/fransamsing/Salmon_align/blob/master/Docs/Analysis_pipeline.png)
 First, download and clone this github directory into your home directory in Pearcey using:
