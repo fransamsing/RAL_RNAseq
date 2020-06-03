@@ -29,8 +29,12 @@ The quality of the raw RNAseq data looks really good, so we proceed with the pip
 
 ## Download the *Penaeus monodon* transcriptome
 
-The transcriptomes was downloaded into ```/scratch1/sam079/P_monodon/```.
+The transcriptomes was downloaded into ```/scratch1/sam079/P_monodon/``` using ```wget```.
 
+**Hub transcriptome from Huerlimann et al. 2018 (https://www.nature.com/articles/s41598-018-31148-4), available here:**
+
+* https://sra-download.ncbi.nlm.nih.gov/traces/wgs03/wgs_aux/GG/LH/GGLH01/GGLH01.1.fsa_nt.gz
+* Github with code: https://github.com/R-Huerlimann/Pmono_multitissue_transcriptome
 
 
 
