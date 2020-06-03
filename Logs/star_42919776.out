@@ -1,0 +1,7 @@
+May 21 22:27:55 ..... started STAR run
+May 21 22:27:55 ... starting to generate Genome files
+
+EXITING because of FATAL PARAMETER ERROR: limitGenomeGenerateRAM=31000000000is too small for your genome
+SOLUTION: please specify --limitGenomeGenerateRAM not less than 165035403306 and make that much RAM available 
+
+May 21 23:32:09 ...... FATAL ERROR, exiting

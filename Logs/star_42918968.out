@@ -1,0 +1,7 @@
+May 21 21:56:57 ..... started STAR run
+
+EXITING because of FATAL INPUT PARAMETER ERROR: when generating genome without annotations (--sjdbFileChrStartEnd or --sjdbGTFfile options)
+do not specify >0 --sjdbOverhang
+SOLUTION: re-run genome generation without --sjdbOverhang option
+
+May 21 21:56:57 ...... FATAL ERROR, exiting

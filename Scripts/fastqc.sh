@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#***************************************************************#
+#               runs fastqc on gzipped raw data files           #
+#***************************************************************#
+
+#--------------------------sbatch header------------------------#
+
+#SBATCH --job-name=fastqc
+#SBATCH --time=06:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=10gb
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=francisca.samsingpedrals@csiro.au
+#SBATCH --output=../Logs/fastqc_%A.out
+#SBATCH --array=0-35
+
+#----------------------project variables------------------------# 
+
+IN_DIR=/scratch1/sam079/RAL_hemoRNAseq/Data/
+OUT_DIR=/home/sam079/Results/fastqc/
+
+#---------------------------------------------------------------#
+
+module load fastqc/0.11.5
+
+IN_FILE_LIST=( $(cut -d , -f 1 ../METADATA.csv | grep -v sample_id) );
+
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
+    then
+        i=$SLURM_ARRAY_TASK_ID
+        IN_FILE=${IN_DIR}/${IN_FILE_LIST[$i]}
+        fastqc ${IN_FILE} --noextract -o ${OUT_DIR}
+    else
+        echo "Error: Missing array index as SLURM_ARRAY_TASK_ID"
+fi
+

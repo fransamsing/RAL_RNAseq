@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/apps/tophat/2.1.1/bin/tophat", line 4107, in <module>
+    sys.exit(main())
+  File "/apps/tophat/2.1.1/bin/tophat", line 3885, in main
+    prepare_output_dir()
+  File "/apps/tophat/2.1.1/bin/tophat", line 1244, in prepare_output_dir
+    os.mkdir(output_dir)
+OSError: [Errno 2] No such file or directory: '/flush3/sam079/RNAseq-POMV/Processed/Alignment/AlignSalmonGenomeBowtie/P2B3_star_equivalent/'

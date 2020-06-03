@@ -1,0 +1,4 @@
+May 21 22:07:35 ..... started STAR run
+May 21 22:07:35 ... starting to generate Genome files
+/cm/local/apps/slurm/var/spool/job42919062/slurm_script: line 32: 23430 Killed                  STAR --runMode genomeGenerate --genomeDir ${OUT_DIR}/Index_V2_trans --runThreadN 8 --genomeFastaFiles ${FILE_DIR}/GGLH01.1.fsa_nt --outFileNamePrefix ../Logs/star_
+slurmstepd: error: Detected 1 oom-kill event(s) in step 42919062.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.

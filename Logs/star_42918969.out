@@ -1,0 +1,7 @@
+May 21 21:58:16 ..... started STAR run
+May 21 21:58:16 ... starting to generate Genome files
+
+EXITING because of INPUT ERROR: the file format of the genomeFastaFile: /datasets/work/af-prawns/work//GGLH01.1.fsa_nt.gz is not fasta: the first character is '' (31), not '>'.
+ Solution: check formatting of the fasta file. Make sure the file is uncompressed (unzipped).
+
+May 21 21:58:16 ...... FATAL ERROR, exiting
